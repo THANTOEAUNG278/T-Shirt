@@ -5,7 +5,10 @@ const Layout = () =>{
   return(
     <div>
       <NavBar/>
-      <Outlet/>
+      <div className="py-16">
+        <Outlet/>
+      </div>
+      
     </div>
   )
 }
