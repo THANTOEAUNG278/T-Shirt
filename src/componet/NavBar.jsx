@@ -8,10 +8,10 @@ const NavBar = () =>{
       <div>
         <Logo/>
       </div>
-      <div className="flex gap-2 text-xl font-bold">
+      <div className="flex gap-3 text-xl font-bold">
         <NavLink to={"/"} >Home</NavLink>
-        <NavLink to={"page"} >Pages</NavLink>
         <NavLink to={"popular"} >Populars</NavLink>
+        <NavLink to={"page"} >Pages</NavLink>
         <NavLink to={"about"} >About</NavLink>
       </div>
       <div>
