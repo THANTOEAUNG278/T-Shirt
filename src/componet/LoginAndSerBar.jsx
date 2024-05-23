@@ -14,7 +14,7 @@ const LoginAndSerBar = () => {
         {SearchBar && (
         <div className="relative">
           <input type="text" placeholder="Search..." 
-          className="px-1 py-[3px] rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-500"
+          className="px-1 py-[3px] rounded-xl border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-200"
           />
         </div>
         )}

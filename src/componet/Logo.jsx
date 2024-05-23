@@ -1,7 +1,14 @@
+import { GiHighFive } from "react-icons/gi";
 const Logo = () =>{
   return(
-    <div className="text-5xl font-bold text-cyan-400">
-      555
+    <div className="text-6xl font-serif font-bold flex justify-center items-center">
+      <div className="">
+        <GiHighFive/>
+      </div>
+      <div>
+        FIVE
+      </div>
+    
     </div>
   )
 }
