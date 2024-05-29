@@ -22,6 +22,9 @@ const SlideShow = ({images}) => {
 
   return(
     <div>
+      <div className="absolute left-5">
+        p--50% off!!!!
+      </div>
       <img className="w-full product-Ratio" src={images[currentImgIndex]} />
     </div>
   )
