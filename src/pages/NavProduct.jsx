@@ -3,68 +3,89 @@ import { useEffect, useState } from "react";
 const NavProducts = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [filter, setFilter] = useState([]);
 
   useEffect(() => {
+    let componentMounted = true;
     const loadPopularPages = async () => {
-      try {
-        const response = await fetch('https://fakestoreapi.com/products');
-        if (!response.ok) {
-          console.error(`Error: ${response.status} ${response.statusText}`);
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const result = await response.json();
-          console.log("Fetched data:", result);
-          setData(result);
-          setLoading(false);
-        } else {
-          throw new Error("Response is not JSON");
-        }
-      } catch (error) {
-        console.error("Error loading popular pages:", error);
-        setError(error.message);
+      setLoading(true);
+      const response = await fetch("https://fakestoreapi.com/products");
+      if (componentMounted) {
+        const products = await response.json();
+        setData(products);
+        setFilter(products);
         setLoading(false);
       }
-    };
-
+    }
     loadPopularPages();
+
+    return () => {
+      componentMounted = false;
+    }
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const filterProducts = (category) => {
+    if (category === 'All') {
+      setFilter(data);
+    } else {
+      const updatedList = data.filter(item => item.category === category);
+      setFilter(updatedList);
+    }
+  };
 
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto py-8 grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-3 gap-4">
-        {data.map(item => (
-          <PhotoCard key={item.id} data={item} />
-        ))}
+    <>
+      <div>
+        {loading ? <Loading /> : <ShowProducts filter={filter} filterProducts={filterProducts} />}
+      </div>
+    </>
+  );
+};
+
+const PhotoCard = ({ data }) => {
+  return (
+    <div className="bg-gray-50 rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:shadow-lg hover:scale-105">
+      <div className="relative">
+        <img className="w-full h-64 object-cover" src={data.image} alt={data.title} />
+      </div>
+      <div className="p-5">
+        <h3 className="font-semibold text-gray-900 text-lg truncate">{data.title}</h3>
+        <p className="text-gray-700 mt-2">${data.price}</p>
+        <div className="mt-4 flex justify-center">
+          <button className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition">Buy Now</button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default NavProducts;
-
-const PhotoCard = ({ data }) => {
+const ShowProducts = ({ filter, filterProducts }) => {
   return (
-    <div className="relative group cursor-pointer">
-      {/* <div className="p-4 bg-gray-100 border-gray-400 rounded-2xl shadow-md transition-all duration-300 ease-in-out transform group-hover:scale-[.9]"> */}
-        <div className="text-red-600 font-bold">New</div>
-        <img className="w-full object-cover product-card-ratio" src={data.image} alt={data.title} />
-        <div>
-          <p className="font-bold flex items-center justify-center">{data.title}</p>
-          <div className="flex justify-between items-center mx-4 py-3">
-            <p>${data.price}</p>
-          </div>
-          <div className="flex justify-between items-center text-sm">
-            <button className="md:text-sm text-red-500">Buy Now</button>
-            <button className="md:text-sm text-blue-500">Add To Cart</button>
-          </div>
+    <>
+      <div className="flex gap-3 justify-center items-center text-xl font-bold mb-5 py-5">
+        <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts('All')}>All</button>
+        <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts("men's clothing")}>Men's Clothing</button>
+        <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts("women's clothing")}>Women's Clothing</button>
+        <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts('jewelery')}>Jewelery</button>
+        <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts('electronics')}>Electronics</button>
+      </div>
+      <div className="min-h-screen bg-gray-100 py-10">
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filter.map(item => (
+            <PhotoCard key={item.id} data={item} />
+          ))}
         </div>
       </div>
-    // </div>
+    </>
   );
 };
+
+const Loading = () => {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      Loading...
+    </div>
+  );
+};
+
+export default NavProducts;
