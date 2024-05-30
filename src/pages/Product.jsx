@@ -14,7 +14,15 @@ const Products = () => {
       setLoading(false)
     }
     getProducts();
-  },[input]);
+  },[]);
+
+  const ShowProduct =() =>{
+    return(
+      <div>
+        hello
+      </div>
+    )
+  }
   return (
     <div>
       {loading ? <Loading/>: <ShowProduct/>}
