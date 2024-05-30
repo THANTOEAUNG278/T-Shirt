@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const NavProducts = () => {
   const [data, setData] = useState([]);
@@ -52,7 +53,7 @@ const PhotoCard = ({ data }) => {
         <h3 className="font-semibold text-gray-900 text-lg truncate">{data.title}</h3>
         <p className="text-gray-700 mt-2">${data.price}</p>
         <div className="mt-4 flex justify-center">
-          <button className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition">Buy Now</button>
+          <NavLink className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition">Buy Now</NavLink>
         </div>
       </div>
     </div>
@@ -63,7 +64,7 @@ const ShowProducts = ({ filter, filterProducts }) => {
   return (
     <>
       <div className="flex gap-3 justify-center items-center text-xl font-bold mb-5 py-5">
-        <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts('All')}>All</button>
+        <NavLink className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts('All')}>All</NavLink>
         <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts("men's clothing")}>Men's Clothing</button>
         <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts("women's clothing")}>Women's Clothing</button>
         <button className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-indigo-300 transition" onClick={() => filterProducts('jewelery')}>Jewelery</button>

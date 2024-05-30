@@ -1,8 +1,10 @@
-const Products = () => {
-  return (
+import NavProducts from "./NavProduct";
+
+const ProductPages = ()=>{
+  return(
     <div>
-      hello 
+      <NavProducts/>
     </div>
   )
 }
-export default Products;
+export default ProductPages;
