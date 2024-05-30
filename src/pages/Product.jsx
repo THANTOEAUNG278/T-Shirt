@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const Products = () => {
+const Product = () => {
   const {id} = useParams();
   const [product,setProduct] = useState([]);
   const [loading,setLoading] = useState(false);
@@ -19,17 +19,18 @@ const Products = () => {
   const ShowProduct =() =>{
     return(
       <div>
-        hello
+        <img src={product.image} alt={product.id} />
       </div>
     )
   }
   return (
     <div>
       {loading ? <Loading/>: <ShowProduct/>}
+      <div>hello</div>
     </div>
   )
 }
-export default Products;
+export default Product;
 
 const Loading = () => {
   return (

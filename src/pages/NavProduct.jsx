@@ -61,6 +61,7 @@ const PhotoCard = ({ data }) => {
 };
 
 const ShowProducts = ({ filter, filterProducts }) => {
+
   return (
     <>
       <div className="flex gap-3 justify-center items-center text-xl font-bold mb-5 py-5">
