@@ -1,6 +1,24 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
+// Define PhotoCard component
+const PhotoCard = ({ data }) => {
+  return (
+    <div className="bg-gray-50 rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:shadow-lg hover:scale-105">
+      <div className="relative">
+        <img className="w-full h-64 object-cover" src={data.image} alt={data.title} />
+      </div>
+      <div className="p-5">
+        <h3 className="font-semibold text-gray-900 text-lg truncate">{data.title}</h3>
+        <p className="text-gray-700 mt-2">${data.price}</p>
+        {/* Corrected NavLink */}
+        <NavLink to={`/products/product/${data.id}`} className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition">Buy Now</NavLink>
+      </div>
+    </div>
+  );
+};
+
+// Define NavProducts component
 const NavProducts = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,23 +61,7 @@ const NavProducts = () => {
   );
 };
 
-const PhotoCard = ({ data }) => {
-  return (
-    <div className="bg-gray-50 rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:shadow-lg hover:scale-105">
-      <div className="relative">
-        <img className="w-full h-64 object-cover" src={data.image} alt={data.title} />
-      </div>
-      <div className="p-5">
-        <h3 className="font-semibold text-gray-900 text-lg truncate">{data.title}</h3>
-        <p className="text-gray-700 mt-2">${data.price}</p>
-        <div className="mt-4 flex justify-center">
-          <NavLink className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition">Buy Now</NavLink>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+// Define ShowProducts component
 const ShowProducts = ({ filter, filterProducts }) => {
 
   return (
@@ -82,6 +84,7 @@ const ShowProducts = ({ filter, filterProducts }) => {
   );
 };
 
+// Define Loading component
 const Loading = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -90,4 +93,5 @@ const Loading = () => {
   );
 };
 
+// Export NavProducts component
 export default NavProducts;
